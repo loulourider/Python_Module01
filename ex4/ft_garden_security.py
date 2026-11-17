@@ -1,41 +1,56 @@
 class Plant:
-    def __init__(self, name : str, height : float,  age : int):
-        self.set_height(height)
-        self._height = 0
+    def __init__(self, name: str, height: float, age: int) -> None:
+        self._name = name
+        self._height = 0.0
         self._age = 0
-        self.name = name 
+        self.set_height(height)
         self.set_age(age)
-    def set_age(self, age):
-        if age < 0:
-            print("Error, age can't be negative")
-        else:
-            self._age = age
-    def set_height(self, height):
-        if height < 0:
-            print("Error, height can't be negative")
-        else:
-            self._height = height
-    def get_height(self):
+
+    def get_name(self) -> str:
+        return self._name
+
+    def get_height(self) -> float:
         return self._height
-    def get_age(self):
+
+    def get_age(self) -> int:
         return self._age
+
+    def set_height(self, height: float) -> bool:
+        if height < 0:
+            print(f"{self._name}: Error, height can't be negative")
+            return False
+        self._height = float(height)
+        return True
+
+    def set_age(self, age: int) -> bool:
+        if age < 0:
+            print(f"{self._name}: Error, age can't be negative")
+            return False
+        self._age = age
+        return True
+
+    def show(self) -> None:
+        print(f"{self._name}: {self._height}cm, {self._age} days old")
 
 
 if __name__ == "__main__":
-    print("=== Création valide ===")
-    rose = Plant("Rose", 25.0, 30)
-    print(f"{rose.name}: {rose.get_height()}cm, {rose.get_age()} days old")
+    print("=== Garden Security System ===")
+    rose = Plant("Rose", 15.0, 10)
+    print("Plant created: ", end="")
+    rose.show()
+    print()
 
-    print("\n=== Modifications valides ===")
-    rose.set_height(40.0)
-    rose.set_age(35)
-    print(f"{rose.name}: {rose.get_height()}cm, {rose.get_age()} days old")
+    if rose.set_height(25):
+        print("Height updated: 25cm")
+    if rose.set_age(30):
+        print("Age updated: 30 days")
+    print()
 
-    print("\n=== Modifications invalides ===")
-    rose.set_height(-10)
-    rose.set_age(-5)
-    print(f"{rose.name}: {rose.get_height()}cm, {rose.get_age()} days old")
+    if not rose.set_height(-5):
+        print("Height update rejected")
+    if not rose.set_age(-10):
+        print("Age update rejected")
+    print()
 
-    print("\n=== Constructeur avec valeurs invalides ===")
-    bad = Plant("Cactus", -5.0, -20)
-    print(f"{bad.name}: {bad.get_height()}cm, {bad.get_age()} days old")
+    print("Current state: ", end="")
+    rose.show()
